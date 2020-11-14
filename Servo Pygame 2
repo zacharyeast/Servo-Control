@@ -1,0 +1,61 @@
+import math
+import random
+import RPi.GPIO as GPIO
+import time
+import pygame
+from pygame import mixer
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11,GPIO.OUT)
+servo1 = GPIO.PWM(11,50)
+servo1.start(0)
+GPIO.setwarnings(False)
+# Intialize the pygame
+pygame.init()
+screen = pygame.display.set_mode((1, 1))
+# Game Loop
+
+angle = float(5)
+servo1.ChangeDutyCycle(2+abs(angle))
+time.sleep(0.5)
+servo1.ChangeDutyCycle(0)
+running = True
+while running:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        # if keystroke is pressed check whether its right or left
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                print("Left")
+                angle = float(0)
+                servo1.ChangeDutyCycle(2+abs(angle))
+                time.sleep(0.5)
+                servo1.ChangeDutyCycle(0)
+
+            if event.key == pygame.K_RIGHT:
+                print("Right")
+                angle = float(10)
+                servo1.ChangeDutyCycle(2+abs(angle))
+                time.sleep(0.5)
+                servo1.ChangeDutyCycle(0)
+            if event.key == pygame.K_DOWN:
+                print("Down")
+                angle = float(5)
+                servo1.ChangeDutyCycle(2+abs(angle))
+                time.sleep(0.5)
+                servo1.ChangeDutyCycle(0)                
+            if event.key == pygame.K_SPACE:
+                print("space")
+
+        if event.type == pygame.KEYUP:
+            angle = float(5)
+            servo1.ChangeDutyCycle(2+abs(angle))
+            time.sleep(0.5)
+            servo1.ChangeDutyCycle(0) 
+ #       elif event.type == pygame.KEYDOWN:
+  #          print("nope")
+
+
