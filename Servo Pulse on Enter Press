@@ -1,0 +1,17 @@
+from gpiozero import PWMLED
+#
+from signal import pause
+from time import sleep
+led = PWMLED(17)
+#led.pulse(0.1,True,1,100)
+print("Press enter")
+
+while True:
+    while input() == "":
+        led.pulse(1,True,1)
+        sleep(1.5)
+        print("enter")
+#    while input() == "a":
+#        led.pulse(1,True,1)
+#        sleep(1.5)
+#        print("enter")
