@@ -1,0 +1,57 @@
+import time
+from adafruit_servokit import ServoKit
+
+# Set channels to the number of servo channels on your kit.
+# 8 for FeatherWing, 16 for Shield/HAT/Bonnet.
+kit = ServoKit(channels=16)
+
+
+import math
+import pygame
+from pygame import mixer
+from time import sleep
+
+
+
+# Intialize the pygame
+pygame.init()
+screen = pygame.display.set_mode((1, 1))
+
+kit.servo[2].angle = 90
+# Game Loop
+running = True
+while running:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        # if keystroke is pressed check whether its right or left
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                print("p")
+                kit.servo[0].angle = 125
+
+
+            if event.key == pygame.K_f:
+                print("f")
+                kit.servo[1].angle = 125
+
+            if event.key == pygame.K_LEFT:
+                print("Rudder Left")
+                kit.servo[2].angle = 30
+
+            if event.key == pygame.K_RIGHT:
+                print("Rudder Right")
+                kit.servo[2].angle = 150
+                
+            if event.key == pygame.K_m:
+                print("m")
+     
+            
+        if event.type == pygame.KEYUP:
+            kit.servo[0].angle = 0
+
+            kit.servo[1].angle = 0
+            kit.servo[2].angle = 90
+
