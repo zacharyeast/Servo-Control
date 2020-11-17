@@ -1,0 +1,88 @@
+import time
+from adafruit_servokit import ServoKit
+import RPi.GPIO as GPIO
+import math
+import random
+import time
+import pygame
+from pygame import mixer
+from time import sleep
+# Set channels to the number of servo channels on your kit.
+# 8 for FeatherWing, 16 for Shield/HAT/Bonnet.
+kit = ServoKit(channels=16)
+
+import math
+import pygame
+from pygame import mixer
+from time import sleep
+
+
+
+
+# Intialize the pygame
+pygame.init()
+screen = pygame.display.set_mode((1, 1))
+
+GPIO.setup(21,GPIO.OUT)
+servo2 = GPIO.PWM(21,50)
+servo2.start(0)
+servo2.ChangeDutyCycle(0)
+sleep(0.1)
+servo2.ChangeDutyCycle(100)
+sleep(0.1)
+servo2.ChangeDutyCycle(0)
+print("{ for light on and } for light off")
+def event_rudderleft():
+    print("Rudder Left")
+    kit.servo[2].angle = 30
+def event_rudderright():
+    print("Rudder Right")
+    kit.servo[2].angle = 155
+def light_on():
+    printon = print("light on")
+    servo2.ChangeDutyCycle(0)
+    sleep(0.1)
+    servo2.ChangeDutyCycle(100)
+def light_off():
+    printon = print("light off")
+    servo2.ChangeDutyCycle(0)
+
+def event_p():
+    print("p")
+    kit.servo[0].angle = 135
+def event_f():
+    print("f")
+    kit.servo[1].angle = 150
+# Game Loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        # if keystroke is pressed check whether its right or left
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                event_p()
+            if event.key == pygame.K_f:
+                event_f()
+            if event.key == pygame.K_LEFT:
+                event_rudderleft()
+            if event.key == pygame.K_RIGHT:
+                event_rudderright()              
+            if event.key == pygame.K_LEFTBRACKET:
+                light_on()
+            if event.key == pygame.K_RIGHTBRACKET:
+                light_off()            
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_p:
+                kit.servo[0].angle = 0
+            if event.key == pygame.K_f:
+                kit.servo[1].angle = 0
+            if event.key == pygame.K_LEFT:
+                kit.servo[2].angle = 90
+            if event.key == pygame.K_RIGHT:
+                kit.servo[2].angle = 90              
+           
+            
+
+
