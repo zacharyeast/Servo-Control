@@ -1,0 +1,43 @@
+import pygame
+import RPi.GPIO as GPIO
+import time
+from pygame import mixer
+from time import sleep
+#import math
+import sys
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(18,GPIO.OUT)
+servo1 = GPIO.PWM(18,50)
+servo1.start(0)
+def stay_left():
+    servo1.ChangeDutyCycle(12.5)
+def recenter():
+    servo1.ChangeDutyCycle(2.5)
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((60, 40))
+    while True:
+        pressed = pygame.key.get_pressed()      
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    sys.exit()
+                elif event.key == pygame.K_LEFT:
+                    stay_left()
+                elif event.key == pygame.K_o:
+                    stay_left()
+                elif event.key == pygame.K_UP:
+                    stay_left()                    
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_DOWN:
+                   recenter()
+                if event.key == pygame.K_UP:
+                    recenter()
+        
+         
+main()
+
